@@ -30,6 +30,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  easy_dynamic_theme: ^2.2.0 
+  url_launcher: ^5.5.0 
 
 
   # The following adds the Cupertino Icons font to your application.
