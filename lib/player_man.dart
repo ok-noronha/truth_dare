@@ -5,7 +5,20 @@ class Player {
   int id;
   String name;
   int gender;
+  num score = 0.0;
+  List<int?> questions = [];
   Player(this.id, this.name, this.gender);
+
+  void gotQuestion(int? q) {
+    findPlayer(id, _players).questions.add(q);
+  }
+
+  void addScore(num s) {
+    findPlayer(id, _players).score += s;
+  }
+
+  static Player findPlayer(int id, List<Player> list) =>
+      list.firstWhere((player) => player.id == id);
 
   static Player getPlayerObj() => Player(-1, '', 0);
 

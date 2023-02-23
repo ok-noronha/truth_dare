@@ -1,14 +1,13 @@
 import 'player_man.dart';
-import 'question_man.dart';
 import 'package:flutter/material.dart';
 
-dynamic getPLayersPage(String n) => _PlayersPage(
+dynamic getPLayersPage(String n) => const _PlayersPage(
       title: 'n',
     );
 
 class _PlayersPage extends StatefulWidget {
   // ignore: unused_element
-  _PlayersPage({super.key, required this.title});
+  const _PlayersPage({super.key, required this.title});
   final String title;
 
   @override
@@ -22,7 +21,7 @@ class _PlayerState extends State<_PlayersPage> {
   @override
   void initState() {
     super.initState();
-    Player.addPlayer(0, 'Player 1', 1);
+    Player.addPlayer(Player.getPlayers().length + 1, 'Player 1', 0);
     _playerController = TextEditingController();
     _genc = TextEditingController();
   }
@@ -65,18 +64,16 @@ class _PlayerState extends State<_PlayersPage> {
                     } else {
                       player.gender = 1;
                     }
-                    setState(() {
-                      //refresh UI after deleting element from list
-                    });
+                    setState(() {});
                   },
                 ),
-                title: Text(player.name),
+                title: Text('${player.id}. ${player.name}'),
                 trailing: ElevatedButton(
                   child: const Icon(Icons.delete),
                   onPressed: () {
                     //delete action for this button
                     Player.getPlayers().removeWhere((element) {
-                      return element.name == player.name;
+                      return element.id == player.id;
                     }); //go through the loop and match content to delete from list
                     setState(() {
                       //refresh UI after deleting element from list
@@ -100,23 +97,39 @@ class _PlayerState extends State<_PlayersPage> {
   }
 
   Future _openNewPlayer() => showDialog(
+        useSafeArea: true,
+        barrierDismissible: true,
         context: context,
         builder: (context) => AlertDialog(
-          title: const Text("Add Player"),
-          content: Column(
-            children: [
-              TextField(
-                controller: _playerController,
-                autofocus: true,
-                decoration:
-                    const InputDecoration(hintText: "Enter Player Name"),
-              ),
-              TextField(
-                controller: _genc,
-                autofocus: true,
-                decoration: const InputDecoration(hintText: "Gender"),
-              ),
-            ],
+          title: const Text("Add Player",
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+          content: SizedBox(
+            height: 90,
+            child: Stack(
+              children: [
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: TextField(
+                    style: const TextStyle(
+                        fontSize: 16, fontStyle: FontStyle.italic),
+                    controller: _playerController,
+                    autofocus: true,
+                    decoration: const InputDecoration(hintText: "Player Name"),
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.bottomLeft,
+                  child: TextField(
+                    style: const TextStyle(
+                        fontSize: 16, fontStyle: FontStyle.italic),
+                    //cursorHeight: 3,
+                    controller: _genc,
+                    autofocus: true,
+                    decoration: const InputDecoration(hintText: "Gender"),
+                  ),
+                ),
+              ],
+            ),
           ),
           actions: <Widget>[
             TextButton(
@@ -126,7 +139,7 @@ class _PlayerState extends State<_PlayersPage> {
             TextButton(
               child: const Text("Add"),
               onPressed: () {
-                Player.addPlayer(Player.getPlayers().length,
+                Player.addPlayer(Player.getPlayers().length + 1,
                     _playerController.text, int.parse(_genc.text));
                 _playerController.clear();
                 _genc.clear();

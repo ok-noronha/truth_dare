@@ -1,12 +1,20 @@
 {
     "cSpell.words": [
+        "Barbg",
+        "Barfg",
+        "Consolas",
+        "cupertino",
+        "genc",
         "getplayer",
         "getrandomplayer",
         "jsondata",
+        "lerp",
         "onaccent",
         "onprimary",
         "onsurface",
         "Playerobj",
+        "pskh",
+        "saet",
         "setplayer",
         "setquest"
     ]

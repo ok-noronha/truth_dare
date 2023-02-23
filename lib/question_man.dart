@@ -5,7 +5,6 @@ import 'dart:core';
 import 'package:flutter/services.dart';
 import 'dart:convert';
 import 'dart:math';
-import 'dart:async';
 import 'player_man.dart';
 
 class Question {
@@ -19,10 +18,10 @@ class Question {
 }
 
 class Data {
-  late List<dynamic> truths;
-  late List<dynamic> dares;
+  late List<Question> truths;
+  late List<Question> dares;
 
-  _Data() {
+  Data() {
     truths = [];
     dares = [];
   }
@@ -39,45 +38,54 @@ Question getQfJ(Map<String, dynamic> json) {
 }
 
 Data d = Data();
+//List<Question> _truths = [];
+//List<Question> _dares = [];
 
 Future<void> readJson() async {
   final String response = await rootBundle.loadString('assets/questions.json');
   final data = await json.decode(response);
-  d.truths = data["truths"];
-  d.dares = data["dares"];
+  d.truths = [for (var x in data["truths"]) getQfJ(x)];
+  d.dares = [for (var x in data["dares"]) getQfJ(x)];
 }
 
 Data getData() {
   if (d.truths.isEmpty || d.dares.isEmpty) {
     readJson();
   }
+  d = d;
   return d;
 }
 
-Question getRandomQuestion(int params, Player p) {
-  if (params == 0) {
-    Question q = getQfJ(getData().truths[Random().nextInt(d.truths.length)]);
-    int c = 0;
-    while (q.gender != p.gender || q.used == 1) {
-      q = getQfJ(getData().truths[Random().nextInt(d.truths.length)]);
-      c++;
-      if (c > 10) {
-        return Question(-1, 'No more questions', 0, 0, 0);
-      }
-    }
-    q.used = 1;
-    return q;
-  } else {
-    Question q = getQfJ(getData().dares[Random().nextInt(d.dares.length)]);
-    int c = 0;
-    while (q.gender != p.gender || q.used == 1) {
-      q = getQfJ(getData().dares[Random().nextInt(d.dares.length)]);
-      c++;
-      if (c > 10) {
-        return Question(-1, 'No more questions', 0, 0, 0);
-      }
-    }
-    q.used = 1;
-    return q;
+Question getRandomQuestion(int params, Player p, int counter) {
+  List saet = [];
+  counter++;
+  if (counter > 100) {
+    return Question(-1, 'Sorry to Hard to find something for You', 0, 0, 0);
   }
+  if (params == 0) {
+    saet = d.truths;
+  }
+  if (params == 1) {
+    saet = d.dares;
+  }
+  int i = Random().nextInt(saet.length);
+  Question q = saet[i];
+  if (q.used == 1) {
+    if (p.questions.contains(q.id)) {
+      return getRandomQuestion(params, p, counter);
+    }
+  }
+  if (q.gender != p.gender) {
+    if (q.gender != 0) {
+      return getRandomQuestion(params, p, counter);
+    }
+  }
+  if (params == 0) {
+    d.truths[i].used = 1;
+  }
+  if (params == 1) {
+    d.dares[i].used = 1;
+  }
+  p.gotQuestion(q.id);
+  return q;
 }

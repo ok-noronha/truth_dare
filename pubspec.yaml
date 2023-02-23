@@ -32,6 +32,10 @@ dependencies:
     sdk: flutter
   easy_dynamic_theme: ^2.2.0 
   url_launcher: ^5.5.0 
+  http: ^0.13.3
+  fancy_button_flutter: ^1.0.3+1
+  animations: ^2.0.7
+  getwidget: ^2.0.4
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -62,7 +66,30 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-  - assets/questions.json
+    - assets/questions.json
+    - images/TorD_w.png
+    - images/TorD_b.png
+    - images/choice1.png
+    - images/choice2.jpg
+    - images/choice3.png
+    - images/choice4.jpg
+    - images/choice5.png
+    - images/choice6.jpg
+    - images/choice7.jpg
+    - images/choice8.jpg
+    - images/choice9.jpg
+    - images/choice10.png
+    - images/choice11.png
+    - images/choice12.png
+    - images/devil1.jpg
+    - images/angel1.jpg
+    - images/Heaven.jpg
+    - images/Hell.jpg
+    - images/player.png
+    - images/icon1.jpg
+    - images/icon2.png
+
+
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
@@ -76,9 +103,19 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
+  fonts:
+    - family: sofachrome
+      fonts:
+        - asset: fonts/sofachrome rg.otf
+        - asset: fonts/sofachrome rg it.otf
+          style: italic
+
+    - family: Creattion Demo
+      fonts:
+        - asset: fonts/Creattion Demo.otf
+    - family: Black Cherry
+      fonts:
+        - asset: fonts/BLKCHCRY.TTF      
   #       - asset: fonts/Schyler-Regular.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic

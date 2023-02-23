@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'colors.dart';
 // ignore: unnecessary_import
 import 'package:flutter/cupertino.dart';
