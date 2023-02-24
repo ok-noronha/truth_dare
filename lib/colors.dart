@@ -5,19 +5,8 @@ class ThemeManager {
   static const appBarbg = Color(0xFFC92DAF);
   static const appBarfg = Color(0xFF000000);
   static const backgroundColor = Color(0xFF17001A);
-  static const accent = Color(0xff00e5ff);
-  static const onaccent = Color(0xFF063035);
-  static const light = Color(0xffeceff1);
-  static const dark = Color(0xff37474f);
-  static const white = Color(0xfffafafa);
-  static const black = Color(0xff212121);
-  static const heart = Color(0xfff50057);
-  static const error = Color(0xfff50057);
-  static const onerror = Color(0xfff50057);
-  static const twitter = Color(0xff00b0ff);
-  static const surface = Color(0xff00b0ff);
-  static const onsurface = Color(0xFF133546);
-  static const github = Color(0xff212121);
+  static const blood = Color.fromARGB(255, 167, 0, 0);
+  static const gold = Color.fromARGB(255, 255, 177, 7);
 }
 
 class MyColors {

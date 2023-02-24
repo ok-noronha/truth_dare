@@ -1,3 +1,7 @@
+// ignore: duplicate_ignore
+// ignore: file_names
+// ignore_for_file: file_names, unused_import, unused_field, unused_element
+
 import 'player_man.dart';
 import 'colors.dart';
 import 'images.dart';

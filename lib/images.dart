@@ -6,4 +6,5 @@ class ImageManager {
   static const dareSide = 'images/devil1.jpg';
   static const heaven = 'images/Heaven.jpg';
   static const hell = 'images/Hell.jpg';
+  static const ch11 = 'images/choice11.png';
 }

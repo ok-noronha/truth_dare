@@ -1,34 +1,42 @@
-import 'ai trials/player_man.dart';
-import 'ai trials/colors.dart';
-import 'ai trials/images.dart';
-import 'ai trials/ui_helpers.dart';
-import 'ai trials/question_man.dart';
-import 'ai trials/players_page.dart';
-import 'package:flutter/material.dart';
-import 'package:fancy_button_flutter/fancy_button_flutter.dart';
+import 'colors.dart';
+import 'images.dart';
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+import 'player_man.dart';
+import 'question_man.dart';
+
+import 'players_page.dart';
+
+import 'package:flutter/material.dart';
+import 'package:gradient_widgets/gradient_widgets.dart';
+
+dynamic getRoundPage(String n) => _RoundPage(
+      title: n,
+    );
+
+class _RoundPage extends StatefulWidget {
+  // ignore: unused_element
+  const _RoundPage({super.key, required this.title});
   final String title;
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<_RoundPage> createState() => _RoundPageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _RoundPageState extends State<_RoundPage> {
   Player _p = Player.getPlayerObj();
   String _name = "";
   String? _quest = "";
-  bool _playButtonVisibility = true;
+  Color _questionColor = ThemeManager.gold;
   bool _playerNameVisibility = false;
   bool _questionVisibility = false;
   bool _choiceButtonVisibility = false;
   bool _imageVisibility = true;
+  // ignore: unused_field
   bool _judgeVisibility = false;
 
   @override
   void initState() {
-    getData();
+    _setplayer();
     super.initState();
   }
 
@@ -40,11 +48,9 @@ class _MyHomePageState extends State<MyHomePage> {
     _p = Player.getRandomPlayer()!;
     setState(() {
       _name = _p.name;
-      _imageVisibility = false;
       _questionVisibility = false;
       _playerNameVisibility = true;
       _choiceButtonVisibility = true;
-      _playButtonVisibility = false;
       _judgeVisibility = false;
     });
   }
@@ -52,21 +58,25 @@ class _MyHomePageState extends State<MyHomePage> {
   void _setquest(int param) {
     setState(() {
       _quest = '${_p.name}, ${getRandomQuestion(param, _p, 0).question}';
+      if (param == 0) {
+        _questionColor = ThemeManager.gold;
+      } else {
+        _questionColor = ThemeManager.blood;
+      }
       _questionVisibility = true;
       _choiceButtonVisibility = false;
       _judgeVisibility = true;
       _playerNameVisibility = true;
-      _playButtonVisibility = false;
       _imageVisibility = false;
     });
   }
 
+  // ignore: unused_element
   void _deeddone(num scr) {
     _p.addScore(scr);
     setState(() {
       _choiceButtonVisibility = false;
       _judgeVisibility = false;
-      _playButtonVisibility = true;
       _playerNameVisibility = false;
       _questionVisibility = false;
       _imageVisibility = true;
@@ -76,19 +86,22 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
+      bottom: true,
+      top: true,
+      left: true,
+      right: true,
       child: Scaffold(
         backgroundColor: ThemeManager.backgroundColor,
         appBar: AppBar(
           title: Text(
             widget.title,
-            // ignore: prefer_const_constructors
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 30,
               fontFamily: 'Black Cherry',
             ),
           ),
           backgroundColor: ThemeManager.appBarbg,
-          //foregroundColor: ,
+          foregroundColor: ThemeManager.appBarfg,
           actions: <Widget>[
             IconButton(
               icon: const Icon(Icons.account_box_rounded),
@@ -96,6 +109,24 @@ class _MyHomePageState extends State<MyHomePage> {
               alignment: const Alignment(0, 0),
               tooltip: 'Player Settings',
               onPressed: () {
+                // ignore: todo
+                //TODO: change play button
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        // ignore: todo
+                        //TODO: Navigate to Round Page
+                        builder: (context) => getPLayersPage("Players")));
+              },
+            ),
+            IconButton(
+              icon: const Icon(Icons.settings),
+              //splashRadius: 10,
+              alignment: const Alignment(0, 0),
+              tooltip: 'Player Settings',
+              onPressed: () {
+                // ignore: todo
+                //TODO: Add Settings Page
                 Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -104,79 +135,94 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ],
         ),
-        body: SizedBox(
+        body: Container(
+          constraints: BoxConstraints.tight(const Size(500, 800)),
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage(ImageManager.ch11), fit: BoxFit.cover),
+          ),
           child: Stack(
             children: <Widget>[
-              Align(
-                alignment: Alignment.topCenter,
-                child: Visibility(
-                  visible: _playerNameVisibility,
-                  child: Stack(
-                    alignment: Alignment.center,
-                    children: [
-                      Text(
-                        _name,
-                        style: const TextStyle(
-                          fontSize: 40,
-                          fontWeight: FontWeight.w900,
-                          fontStyle: FontStyle.italic,
-                          shadows: [
-                            Shadow(
-                              blurRadius: 10.0,
-                              color: MyColors.dark,
-                              offset: Offset(5.0, 5.0),
-                            ),
-                          ],
-                          //fontFamilyFallback: Typography._helsinkiFontFallbacks,
-                          fontFamily: 'Consolas',
-                          color: MaterialColors.purple,
+              Visibility(
+                //Player Name
+                visible: _playerNameVisibility,
+                child: Align(
+                  alignment: Alignment.topCenter,
+                  child: GradientText(
+                    _name,
+                    shaderRect: const Rect.fromLTWH(60.0, 28.0, 50.0, 80.0),
+                    gradient: Gradients.buildGradient(
+                        Alignment.topLeft,
+                        Alignment.bottomRight,
+                        [ThemeManager.blood, ThemeManager.gold]),
+                    style: const TextStyle(
+                      fontSize: 100,
+                      fontWeight: FontWeight.w800,
+                      fontStyle: FontStyle.italic,
+                      shadows: [
+                        Shadow(
+                          blurRadius: 10.0,
+                          color: Color(0xFF140016),
+                          offset: Offset(5.0, 5.0),
                         ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Align(
-                alignment: Alignment.topCenter,
-                child: Visibility(
-                  visible: _questionVisibility,
-                  child: SizedBox(
-                    width: 300,
-                    height: 200,
-                    child: Card(
-                      borderOnForeground: true,
-                      elevation: 10,
-                      color: MyColors.surface,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: Center(
-                        child: SizedBox(
-                          width: 250,
-                          child: Text(
-                            _quest!,
-                            style: const TextStyle(
-                              fontSize: 21,
-                            ),
-                          ),
-                        ),
-                      ),
+                      ],
+                      //fontFamilyFallback: Typography._helsinkiFontFallbacks,
+                      fontFamily: 'Magenta Rose',
+                      //color: Color(0xFF250038),
                     ),
                   ),
                 ),
               ),
               Visibility(
-                visible: _imageVisibility,
-                child: Padding(
-                  padding: const EdgeInsets.only(
-                    top: 84.0,
-                    left: 15,
-                    right: 15,
-                  ),
-                  child: Image.asset(
-                    ImageManager.backgroundImage,
-                    scale: 1 / 2,
-                    //fit: BoxFit.cover,
+                visible: _questionVisibility,
+                child: SizedBox(
+                  child: Column(
+                    children: [
+                      Card(
+                        borderOnForeground: true,
+                        elevation: 10,
+                        color: _questionColor,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Text(
+                          _quest!,
+                          style: const TextStyle(
+                            fontFamily: 'Creattion Demo',
+                            fontSize: 21,
+                          ),
+                        ),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          ElevatedButton(
+                            onPressed: () {
+                              _deeddone(1);
+                            },
+                            child: const Text(
+                              'Completed',
+                              style: TextStyle(
+                                fontFamily: 'Creattion Demo',
+                                fontSize: 21,
+                              ),
+                            ),
+                          ),
+                          ElevatedButton(
+                            onPressed: () {
+                              _deeddone(-1);
+                            },
+                            child: const Text(
+                              'Forfeited',
+                              style: TextStyle(
+                                fontFamily: 'Creattion Demo',
+                                fontSize: 21,
+                              ),
+                            ),
+                          ),
+                        ],
+                      )
+                    ],
                   ),
                 ),
               ),
@@ -186,13 +232,29 @@ class _MyHomePageState extends State<MyHomePage> {
                   alignment: Alignment.center,
                   child: Row(
                     children: [
-                      SizedBox(
-                        width: 205,
-                        child: Image.asset(ImageManager.truthSide),
+                      ElevatedButton(
+                        onPressed: () {
+                          _setquest(1);
+                        },
+                        child: const Text(
+                          'Dare',
+                          style: TextStyle(
+                            fontFamily: 'Creattion Demo',
+                            fontSize: 21,
+                          ),
+                        ),
                       ),
-                      SizedBox(
-                        width: 205,
-                        child: Image.asset(ImageManager.dareSide),
+                      ElevatedButton(
+                        onPressed: () {
+                          _setquest(0);
+                        },
+                        child: const Text(
+                          'Truth',
+                          style: TextStyle(
+                            fontFamily: 'Creattion Demo',
+                            fontSize: 21,
+                          ),
+                        ),
                       ),
                     ],
                   ),
@@ -245,7 +307,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ),
               Visibility(
-                visible: _playButtonVisibility,
+                visible: true,
                 child: Align(
                   alignment: Alignment.bottomCenter,
                   child: Padding(

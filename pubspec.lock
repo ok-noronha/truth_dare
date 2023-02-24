@@ -65,6 +65,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.2.0"
+  eeffects:
+    dependency: "direct main"
+    description:
+      name: eeffects
+      sha256: fee73235f589222e779fd56bf4514e40848a714e5e7be35b9aa99ba3548f9817
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.3"
   fake_async:
     dependency: transitive
     description:
@@ -128,6 +136,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.1"
+  gradient_widgets:
+    dependency: "direct main"
+    description:
+      name: gradient_widgets
+      sha256: d337a8a329da9aefa50b82155d11875c1b9992982f65d15c805aa057a2670536
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.6.0"
   http:
     dependency: "direct main"
     description:

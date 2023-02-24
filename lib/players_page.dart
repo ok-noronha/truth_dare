@@ -1,4 +1,7 @@
+import 'colors.dart';
+
 import 'player_man.dart';
+
 import 'package:flutter/material.dart';
 
 dynamic getPLayersPage(String n) => const _PlayersPage(
@@ -21,7 +24,9 @@ class _PlayerState extends State<_PlayersPage> {
   @override
   void initState() {
     super.initState();
-    Player.addPlayer(Player.getPlayers().length + 1, 'Player 1', 0);
+    if (Player.getPlayers().isEmpty) {
+      Player.addPlayer(Player.getPlayers().length + 1, 'Player 1', 0);
+    }
     _playerController = TextEditingController();
     _genc = TextEditingController();
   }
@@ -47,7 +52,15 @@ class _PlayerState extends State<_PlayersPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Players"),
+        title: const Text(
+          "Players",
+          style: TextStyle(
+            fontSize: 30,
+            fontFamily: 'Black Cherry',
+          ),
+        ),
+        backgroundColor: ThemeManager.appBarbg,
+        //foregroundColor: ThemeManager.appBarfg,
       ),
       body: SingleChildScrollView(
         child: Column(

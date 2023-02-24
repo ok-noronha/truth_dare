@@ -1,3 +1,5 @@
+// ignore_for_file: unused_import, unused_field, unused_element
+
 import 'player_man.dart';
 import 'colors.dart';
 import 'images.dart';
