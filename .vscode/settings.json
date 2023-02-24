@@ -12,6 +12,7 @@
         "genc",
         "getplayer",
         "getrandomplayer",
+        "getttplayer",
         "getwidget",
         "jsondata",
         "lerp",

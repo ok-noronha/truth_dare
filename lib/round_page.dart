@@ -27,16 +27,16 @@ class _RoundPageState extends State<_RoundPage> {
   String _name = "";
   String? _quest = "";
   Color _questionColor = ThemeManager.gold;
-  bool _playerNameVisibility = false;
+  AssetImage _bgImg = AssetImage(ImageManager.ch11);
+  bool _playerNameVisibility = true;
   bool _questionVisibility = false;
-  bool _choiceButtonVisibility = false;
+  bool _choiceButtonVisibility = true;
   bool _imageVisibility = true;
   // ignore: unused_field
   bool _judgeVisibility = false;
 
   @override
   void initState() {
-    _setplayer();
     super.initState();
   }
 
@@ -53,6 +53,14 @@ class _RoundPageState extends State<_RoundPage> {
       _choiceButtonVisibility = true;
       _judgeVisibility = false;
     });
+  }
+
+  void _getttplayer() {
+    if (Player.getRandomPlayer() == null) {
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => getPLayersPage("Players")));
+    }
+    _p = Player.getRandomPlayer()!;
   }
 
   void _setquest(int param) {
@@ -85,247 +93,221 @@ class _RoundPageState extends State<_RoundPage> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      bottom: true,
-      top: true,
-      left: true,
-      right: true,
-      child: Scaffold(
-        backgroundColor: ThemeManager.backgroundColor,
-        appBar: AppBar(
-          title: Text(
-            widget.title,
-            style: const TextStyle(
-              fontSize: 30,
-              fontFamily: 'Black Cherry',
-            ),
+    return Scaffold(
+      backgroundColor: ThemeManager.backgroundColor,
+      appBar: AppBar(
+        title: Text(
+          widget.title,
+          style: const TextStyle(
+            fontSize: 30,
+            fontFamily: 'Black Cherry',
           ),
-          backgroundColor: ThemeManager.appBarbg,
-          foregroundColor: ThemeManager.appBarfg,
-          actions: <Widget>[
-            IconButton(
-              icon: const Icon(Icons.account_box_rounded),
-              //splashRadius: 10,
-              alignment: const Alignment(0, 0),
-              tooltip: 'Player Settings',
-              onPressed: () {
-                // ignore: todo
-                //TODO: change play button
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        // ignore: todo
-                        //TODO: Navigate to Round Page
-                        builder: (context) => getPLayersPage("Players")));
-              },
-            ),
-            IconButton(
-              icon: const Icon(Icons.settings),
-              //splashRadius: 10,
-              alignment: const Alignment(0, 0),
-              tooltip: 'Player Settings',
-              onPressed: () {
-                // ignore: todo
-                //TODO: Add Settings Page
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => getPLayersPage("Players")));
-              },
-            ),
-          ],
         ),
-        body: Container(
-          constraints: BoxConstraints.tight(const Size(500, 800)),
-          decoration: const BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage(ImageManager.ch11), fit: BoxFit.cover),
+        backgroundColor: ThemeManager.appBarbg,
+        foregroundColor: ThemeManager.appBarfg,
+        actions: <Widget>[
+          IconButton(
+            icon: const Icon(Icons.account_box_rounded),
+            //splashRadius: 10,
+            alignment: const Alignment(0, 0),
+            tooltip: 'Player Settings',
+            onPressed: () {
+              // ignore: todo
+              //TODO: change play button
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      // ignore: todo
+                      //TODO: Navigate to Round Page
+                      builder: (context) => getPLayersPage("Players")));
+            },
           ),
-          child: Stack(
-            children: <Widget>[
-              Visibility(
-                //Player Name
-                visible: _playerNameVisibility,
-                child: Align(
-                  alignment: Alignment.topCenter,
-                  child: GradientText(
-                    _name,
-                    shaderRect: const Rect.fromLTWH(60.0, 28.0, 50.0, 80.0),
-                    gradient: Gradients.buildGradient(
-                        Alignment.topLeft,
-                        Alignment.bottomRight,
-                        [ThemeManager.blood, ThemeManager.gold]),
-                    style: const TextStyle(
-                      fontSize: 100,
-                      fontWeight: FontWeight.w800,
-                      fontStyle: FontStyle.italic,
-                      shadows: [
-                        Shadow(
-                          blurRadius: 10.0,
-                          color: Color(0xFF140016),
-                          offset: Offset(5.0, 5.0),
+          IconButton(
+            icon: const Icon(Icons.settings),
+            //splashRadius: 10,
+            alignment: const Alignment(0, 0),
+            tooltip: 'Player Settings',
+            onPressed: () {
+              // ignore: todo
+              //TODO: Add Settings Page
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => getPLayersPage("Players")));
+            },
+          ),
+        ],
+      ),
+      body: Container(
+        constraints: const BoxConstraints.expand(),
+        decoration: BoxDecoration(
+          image: DecorationImage(image: _bgImg, fit: BoxFit.cover),
+        ),
+        child: Stack(
+          children: <Widget>[
+            Visibility(
+              //Player Name
+              visible: _playerNameVisibility,
+              child: Align(
+                alignment: Alignment.topCenter,
+                child: GradientText(
+                  _name,
+                  shaderRect: const Rect.fromLTWH(60.0, 28.0, 50.0, 80.0),
+                  gradient: Gradients.buildGradient(
+                      Alignment.topLeft,
+                      Alignment.bottomRight,
+                      [ThemeManager.blood, ThemeManager.gold]),
+                  style: const TextStyle(
+                    fontSize: 100,
+                    fontWeight: FontWeight.w800,
+                    fontStyle: FontStyle.italic,
+                    shadows: [
+                      Shadow(
+                        blurRadius: 10.0,
+                        color: Color(0xFF140016),
+                        offset: Offset(5.0, 5.0),
+                      ),
+                    ],
+                    //fontFamilyFallback: Typography._helsinkiFontFallbacks,
+                    fontFamily: 'Magenta Rose',
+                    //color: Color(0xFF250038),
+                  ),
+                ),
+              ),
+            ),
+            Visibility(
+              visible: _questionVisibility,
+              child: SizedBox(
+                child: Column(
+                  children: [
+                    Card(
+                      borderOnForeground: true,
+                      elevation: 10,
+                      color: _questionColor,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Text(
+                        _quest!,
+                        style: const TextStyle(
+                          fontFamily: 'Creattion Demo',
+                          fontSize: 21,
+                        ),
+                      ),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        ElevatedButton(
+                          onPressed: () {
+                            _deeddone(1);
+                          },
+                          child: const Text(
+                            'Completed',
+                            style: TextStyle(
+                              fontFamily: 'Creattion Demo',
+                              fontSize: 21,
+                            ),
+                          ),
+                        ),
+                        ElevatedButton(
+                          onPressed: () {
+                            _deeddone(-1);
+                          },
+                          child: const Text(
+                            'Forfeited',
+                            style: TextStyle(
+                              fontFamily: 'Creattion Demo',
+                              fontSize: 21,
+                            ),
+                          ),
                         ),
                       ],
-                      //fontFamilyFallback: Typography._helsinkiFontFallbacks,
-                      fontFamily: 'Magenta Rose',
-                      //color: Color(0xFF250038),
-                    ),
-                  ),
+                    )
+                  ],
                 ),
               ),
-              Visibility(
-                visible: _questionVisibility,
-                child: SizedBox(
-                  child: Column(
-                    children: [
-                      Card(
-                        borderOnForeground: true,
-                        elevation: 10,
-                        color: _questionColor,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: Text(
-                          _quest!,
-                          style: const TextStyle(
-                            fontFamily: 'Creattion Demo',
-                            fontSize: 21,
-                          ),
-                        ),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          ElevatedButton(
-                            onPressed: () {
-                              _deeddone(1);
-                            },
-                            child: const Text(
-                              'Completed',
-                              style: TextStyle(
-                                fontFamily: 'Creattion Demo',
-                                fontSize: 21,
-                              ),
-                            ),
-                          ),
-                          ElevatedButton(
-                            onPressed: () {
-                              _deeddone(-1);
-                            },
-                            child: const Text(
-                              'Forfeited',
-                              style: TextStyle(
-                                fontFamily: 'Creattion Demo',
-                                fontSize: 21,
-                              ),
-                            ),
-                          ),
-                        ],
-                      )
-                    ],
-                  ),
-                ),
-              ),
-              Visibility(
-                visible: _choiceButtonVisibility,
-                child: Align(
-                  alignment: Alignment.center,
-                  child: Row(
-                    children: [
-                      ElevatedButton(
-                        onPressed: () {
-                          _setquest(1);
-                        },
-                        child: const Text(
-                          'Dare',
-                          style: TextStyle(
-                            fontFamily: 'Creattion Demo',
-                            fontSize: 21,
-                          ),
-                        ),
-                      ),
-                      ElevatedButton(
-                        onPressed: () {
-                          _setquest(0);
-                        },
-                        child: const Text(
-                          'Truth',
-                          style: TextStyle(
-                            fontFamily: 'Creattion Demo',
-                            fontSize: 21,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Visibility(
-                visible: _choiceButtonVisibility,
-                child: Align(
-                  alignment: Alignment.center,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      SizedBox(
-                        width: 100,
-                        height: 100,
-                        child: Stack(
-                          children: [
-                            InkWell(
-                              onTap: () {
-                                _setquest(0);
-                              },
-                              child: Ink.image(
-                                image:
-                                    const AssetImage(ImageManager.truthImage),
-                              ),
-                            ),
-                            const Text('Truth')
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        width: 100,
-                        height: 100,
-                        child: Stack(
-                          children: [
-                            InkWell(
-                              onTap: () {
-                                _setquest(1);
-                              },
-                              child: Ink.image(
-                                image: const AssetImage(ImageManager.dareImage),
-                              ),
-                            ),
-                            const Text('Dare')
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Visibility(
-                visible: true,
-                child: Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Padding(
-                    padding: const EdgeInsets.only(
-                      bottom: 90,
-                    ),
-                    child: FloatingActionButton(
+            ),
+            Visibility(
+              visible: _choiceButtonVisibility,
+              child: Align(
+                alignment: Alignment.center,
+                child: Row(
+                  children: [
+                    ElevatedButton(
                       onPressed: () {
-                        _setplayer();
+                        _setquest(1);
                       },
-                      tooltip: 'Next Round',
-                      child: const Icon(Icons.play_arrow_rounded),
+                      child: const Text(
+                        'Dare',
+                        style: TextStyle(
+                          fontFamily: 'Creattion Demo',
+                          fontSize: 21,
+                        ),
+                      ),
                     ),
-                  ),
+                    ElevatedButton(
+                      onPressed: () {
+                        _setquest(0);
+                      },
+                      child: const Text(
+                        'Truth',
+                        style: TextStyle(
+                          fontFamily: 'Creattion Demo',
+                          fontSize: 21,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-            ],
-          ),
+            ),
+            Visibility(
+              visible: _choiceButtonVisibility,
+              child: Align(
+                alignment: Alignment.center,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    SizedBox(
+                      width: 100,
+                      height: 100,
+                      child: Stack(
+                        children: [
+                          InkWell(
+                            onTap: () {
+                              _setquest(0);
+                            },
+                            child: Ink.image(
+                              image: const AssetImage(ImageManager.truthImage),
+                            ),
+                          ),
+                          const Text('Truth')
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      width: 100,
+                      height: 100,
+                      child: Stack(
+                        children: [
+                          InkWell(
+                            onTap: () {
+                              _setquest(1);
+                            },
+                            child: Ink.image(
+                              image: const AssetImage(ImageManager.dareImage),
+                            ),
+                          ),
+                          const Text('Dare')
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );

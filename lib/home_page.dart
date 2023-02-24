@@ -155,13 +155,11 @@ class _MyHomePageState extends State<MyHomePage> {
                   child: FloatingActionButton(
                     onPressed: () {
                       _rounds++;
-                      WidgetsBinding.instance!.addPostFrameCallback((_) {
-                        Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (_) =>
-                                    getRoundPage('Round $_rounds')));
-                      });
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  getRoundPage('Round $_rounds')));
                     },
                     tooltip: 'Next Round',
                     child: const Icon(Icons.play_arrow_rounded),
