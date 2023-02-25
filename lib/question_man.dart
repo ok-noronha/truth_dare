@@ -49,35 +49,33 @@ Future<void> readJson() async {
 }
 
 Data getData() {
-  if (d.truths.isEmpty || d.dares.isEmpty) {
-    readJson();
-  }
+  readJson();
   d = d;
   return d;
 }
 
-Question getRandomQuestion(int params, Player p, int counter) {
+Question getRandomQuestion(int params, Player p, int counter, Data data) {
   List saet = [];
   counter++;
   if (counter > 100) {
     return Question(-1, 'Sorry to Hard to find something for You', 0, 0, 0);
   }
   if (params == 0) {
-    saet = d.truths;
+    saet = data.truths;
   }
   if (params == 1) {
-    saet = d.dares;
+    saet = data.dares;
   }
   int i = Random().nextInt(saet.length);
   Question q = saet[i];
   if (q.used == 1) {
     if (p.questions.contains(q.id)) {
-      return getRandomQuestion(params, p, counter);
+      return getRandomQuestion(params, p, counter, data);
     }
   }
   if (q.gender != p.gender) {
     if (q.gender != 0) {
-      return getRandomQuestion(params, p, counter);
+      return getRandomQuestion(params, p, counter, data);
     }
   }
   if (params == 0) {

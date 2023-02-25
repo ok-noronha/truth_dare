@@ -117,7 +117,13 @@ flutter:
         - asset: fonts/Creattion Demo.otf
     - family: Black Cherry
       fonts:
-        - asset: fonts/BLKCHCRY.TTF      
+        - asset: fonts/BLKCHCRY.TTF
+    - family: Scriptina
+      fonts:
+        - asset: fonts/SCRIPTIN.TTF 
+    - family: Candy
+      fonts:
+        - asset: fonts/CANDY___.otf                
   #       - asset: fonts/Schyler-Regular.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic

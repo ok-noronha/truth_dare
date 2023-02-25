@@ -5,6 +5,9 @@ import 'dart:async';
 import 'colors.dart';
 import 'images.dart';
 
+import 'player_man.dart';
+import 'question_man.dart';
+
 import 'players_page.dart';
 import 'round_page.dart';
 
@@ -24,6 +27,7 @@ class _MyHomePageState extends State<MyHomePage> {
   final _pageController = PageController();
   int _currentPage = 0;
   int _rounds = 0;
+  int c = 0;
   final String _labelImage = ImageManager.backgroundImage;
   late Timer _timer;
   bool _playButtonVisibility = true;
@@ -36,6 +40,8 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
+    c++;
+    Data d = getData();
     _timer = Timer.periodic(const Duration(seconds: 10), (timer) {
       if (_currentPage == _backgroundImages.length - 1) {
         _currentPage = 0;
@@ -63,7 +69,7 @@ class _MyHomePageState extends State<MyHomePage> {
       backgroundColor: ThemeManager.backgroundColor,
       appBar: AppBar(
         title: Text(
-          widget.title,
+          '$widget.title - $c',
           style: const TextStyle(
             fontSize: 30,
             fontFamily: 'Black Cherry',
@@ -155,11 +161,19 @@ class _MyHomePageState extends State<MyHomePage> {
                   child: FloatingActionButton(
                     onPressed: () {
                       _rounds++;
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  getRoundPage('Round $_rounds')));
+                      if (Player.getRandomPlayer() == null) {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    getPLayersPage("Players")));
+                      } else {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    getRoundPage('Round $_rounds')));
+                      }
                     },
                     tooltip: 'Next Round',
                     child: const Icon(Icons.play_arrow_rounded),
