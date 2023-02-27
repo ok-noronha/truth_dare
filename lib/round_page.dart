@@ -8,6 +8,7 @@ import 'question_man.dart';
 import 'ui_helpers.dart';
 
 import 'players_page.dart';
+import 'quest_page.dart';
 
 import 'package:flutter/material.dart';
 import 'package:gradient_widgets/gradient_widgets.dart';
@@ -31,7 +32,7 @@ class _RoundPageState extends State<_RoundPage> {
   //String _name = "";
   String? _quest = "";
   Color _questionColor = ThemeManager.gold;
-  AssetImage _bgImg = AssetImage(ImageManager.ch11);
+  AssetImage _bgImg = AssetImage(ImageManager.getChoiceImg());
   bool _choiceButtonVisibility = true;
   bool _judgeVisibility = false;
 
@@ -119,7 +120,7 @@ class _RoundPageState extends State<_RoundPage> {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => getPLayersPage("Players")));
+                      builder: (context) => getQuestsPage("Add Questions")));
             },
           ),
         ],
@@ -134,8 +135,8 @@ class _RoundPageState extends State<_RoundPage> {
           //mainAxisSize: MainAxisSize.min,
           children: [
             GradientText(
-              _p.name,
-              shaderRect: const Rect.fromLTWH(60.0, 28.0, 50.0, 80.0),
+              '  ${_p.name}  ',
+              shaderRect: const Rect.fromLTWH(90.0, 28.0, 100.0, 90.0),
               gradient: Gradients.buildGradient(
                   Alignment.topLeft,
                   Alignment.bottomRight,
@@ -146,8 +147,8 @@ class _RoundPageState extends State<_RoundPage> {
                 fontStyle: FontStyle.italic,
                 shadows: [
                   Shadow(
-                    blurRadius: 10.0,
-                    color: Color(0xFF140016),
+                    blurRadius: 7.0,
+                    color: Color.fromARGB(172, 0, 0, 0),
                     offset: Offset(5.0, 5.0),
                   ),
                 ],
@@ -203,8 +204,17 @@ class _RoundPageState extends State<_RoundPage> {
                     child: Text(
                       'Dare',
                       style: const TextStyle(
-                        fontSize: 180,
-                        fontFamily: 'Candy',
+                        fontSize: 80,
+                        fontStyle: FontStyle.italic,
+                        shadows: [
+                          Shadow(
+                            blurRadius: 7.0,
+                            color: Color.fromARGB(97, 167, 0, 0),
+                            offset: Offset(5.0, 5.0),
+                          ),
+                        ],
+                        //fontFamilyFallback: Typography._helsinkiFontFallbacks,
+                        fontFamily: 'Black Cherry',
                         color: ThemeManager.blood,
                       ),
                     ),
@@ -221,8 +231,16 @@ class _RoundPageState extends State<_RoundPage> {
                     child: Text(
                       'Truth',
                       style: const TextStyle(
-                        fontSize: 180,
-                        fontFamily: 'Candy',
+                        fontSize: 80,
+                        fontStyle: FontStyle.italic,
+                        shadows: [
+                          Shadow(
+                            blurRadius: 7.0,
+                            color: Color.fromARGB(92, 255, 176, 7),
+                            offset: Offset(5.0, 5.0),
+                          ),
+                        ],
+                        fontFamily: 'Black Cherry',
                         color: ThemeManager.gold,
                       ),
                     ),

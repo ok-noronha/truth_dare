@@ -51,81 +51,74 @@ class _Queststate extends State<_QuestsPage> {
         backgroundColor: ThemeManager.appBarbg,
         foregroundColor: ThemeManager.appBarfg,
       ),
-      body: Column(
-        children: [
-          SizedBox(
-            //height: 400,
-            child: SingleChildScrollView(
-              child: Column(children: [
-                TextField(
-                  style: const TextStyle(
-                      fontSize: 16, fontStyle: FontStyle.italic),
-                  controller: _questController,
-                  autofocus: true,
-                  decoration: const InputDecoration(hintText: "Question"),
-                ),
-                DropdownButton<String>(
-                  value: dropdownValue,
-                  icon: const Icon(Icons.arrow_downward),
-                  elevation: 16,
-                  style: const TextStyle(color: Colors.deepPurple),
-                  underline: Container(
-                    height: 2,
-                    color: Colors.deepPurpleAccent,
-                  ),
-                  onChanged: (String? value) {
-                    // This is called when the user selects an item.
-                    setState(() {
-                      dropdownValue = value!;
-                    });
-                  },
-                  items: _dropdownItems
-                      .map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
-                ),
-                DropdownButton<String>(
-                  value: typeValue,
-                  icon: const Icon(Icons.arrow_downward),
-                  elevation: 16,
-                  style: const TextStyle(color: Colors.deepPurple),
-                  underline: Container(
-                    height: 2,
-                    color: Colors.deepPurpleAccent,
-                  ),
-                  onChanged: (String? value) {
-                    // This is called when the user selects an item.
-                    setState(() {
-                      typeValue = value!;
-                    });
-                  },
-                  items:
-                      _typeItems.map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
-                ),
-              ]),
+      body: Padding(
+        padding: EdgeInsets.all(50),
+        //height: 400,
+        child: SizedBox(
+          child: Column(children: [
+            TextField(
+              style: const TextStyle(fontSize: 16, fontStyle: FontStyle.italic),
+              controller: _questController,
+              autofocus: true,
+              decoration: const InputDecoration(hintText: "Question"),
             ),
-          ),
-          const Spacer(flex: 4),
-          ElevatedButton(
-            onPressed: () {
-              Question.addQuestion(
-                  _questController.text,
-                  _getNumfrmGen(dropdownValue),
-                  typeValue); //add new element to list
-              Navigator.pop(context, true);
-            },
-            child: const Text('Done'),
-          ),
-          const Spacer(flex: 1),
-        ],
+            DropdownButton<String>(
+              value: dropdownValue,
+              icon: const Icon(Icons.arrow_downward),
+              elevation: 16,
+              style: const TextStyle(color: Colors.deepPurple),
+              underline: Container(
+                height: 2,
+                color: Colors.deepPurpleAccent,
+              ),
+              onChanged: (String? value) {
+                // This is called when the user selects an item.
+                setState(() {
+                  dropdownValue = value!;
+                });
+              },
+              items:
+                  _dropdownItems.map<DropdownMenuItem<String>>((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value),
+                );
+              }).toList(),
+            ),
+            DropdownButton<String>(
+              value: typeValue,
+              icon: const Icon(Icons.arrow_downward),
+              elevation: 16,
+              style: const TextStyle(color: Colors.deepPurple),
+              underline: Container(
+                height: 2,
+                color: Colors.deepPurpleAccent,
+              ),
+              onChanged: (String? value) {
+                // This is called when the user selects an item.
+                setState(() {
+                  typeValue = value!;
+                });
+              },
+              items: _typeItems.map<DropdownMenuItem<String>>((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value),
+                );
+              }).toList(),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Question.addQuestion(
+                    _questController.text,
+                    _getNumfrmGen(dropdownValue),
+                    typeValue); //add new element to list
+                Navigator.pop(context, true);
+              },
+              child: const Text('Done'),
+            ),
+          ]),
+        ),
       ),
     );
   }

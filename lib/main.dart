@@ -20,10 +20,10 @@ class MyApp extends StatelessWidget {
       //debugShowCheckedModeBanner: false,
       title: 'Truth or Dare',
       theme: ThemeData(
-          fontFamily: 'Quicksand',
-          primaryColor: MyColors.primary,
-          brightness: Brightness.dark,
-          colorScheme: const ColorScheme(
+        fontFamily: 'Quicksand',
+        primaryColor: MyColors.primary,
+        brightness: Brightness.dark,
+        /*colorScheme: const ColorScheme(
               brightness: Brightness.dark,
               primary: MyColors.primary,
               onPrimary: MyColors.onprimary,
@@ -34,9 +34,9 @@ class MyApp extends StatelessWidget {
               background: ShadowColors.dark,
               onBackground: ShadowColors.light,
               surface: MyColors.surface,
-              onSurface: MyColors.onsurface)
-          //ColorScheme.fromSwatch().copyWith(secondary: MyColors.accent),
-          ),
+              onSurface: MyColors.onsurface) */
+        //ColorScheme.fromSwatch().copyWith(secondary: MyColors.accent),
+      ),
       themeMode: EasyDynamicTheme.of(context).themeMode,
       home: const MyHomePage(title: 'Truth or Dare'),
     );

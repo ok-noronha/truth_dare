@@ -2,15 +2,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ThemeManager {
-  static const appBarbg = Color(0xFFC92DAF);
-  static const appBarfg = Color(0xFF000000);
+  static const appBarbg = Color(0xFF3A0932);
+  static const appBarfg = Color.fromARGB(255, 243, 241, 241);
   static const backgroundColor = Color(0xFF17001A);
   static const blood = Color.fromARGB(255, 167, 0, 0);
   static const gold = Color.fromARGB(255, 255, 177, 7);
 }
 
 class MyColors {
-  static const primary = Color(0xFFC92DAF);
+  static const primary = Color(0xFF4B0940);
   static const onprimary = Color(0xFF000000);
   static const accent = Color(0xff00e5ff);
   static const onaccent = Color(0xFF063035);

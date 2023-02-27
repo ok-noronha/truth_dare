@@ -86,19 +86,26 @@ class _PlayerState extends State<_PlayersPage> {
                           setState(() {});
                         },
                       ),
-                      title: Text(
-                          '${player.id}. ${player.name}   -    ${player.score}'),
-                      trailing: ElevatedButton(
-                        child: const Icon(Icons.delete),
-                        onPressed: () {
-                          //delete action for this button
-                          Player.getPlayers().removeWhere((element) {
-                            return element.id == player.id;
-                          }); //go through the loop and match content to delete from list
-                          setState(() {
-                            //refresh UI after deleting element from list
-                          });
-                        },
+                      title: Text('${player.id}. ${player.name}'),
+                      trailing: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text('${player.score} Souls       '),
+                          //Spacer(),
+                          ElevatedButton(
+                            child: const Icon(Icons.delete),
+                            onPressed: () {
+                              //delete action for this button
+                              Player.getPlayers().removeWhere((element) {
+                                return element.id == player.id;
+                              }); //go through the loop and match content to delete from list
+                              setState(() {
+                                //refresh UI after deleting element from list
+                              });
+                            },
+                          ),
+                          //Spacer(),
+                        ],
                       ),
                     ),
                   );
@@ -107,11 +114,13 @@ class _PlayerState extends State<_PlayersPage> {
             ),
           ),
           const Spacer(flex: 4),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.pop(context, true);
-            },
-            child: const Text('Done'),
+          Center(
+            child: ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context, true);
+              },
+              child: const Text('Done'),
+            ),
           ),
           const Spacer(flex: 1),
         ],
@@ -164,16 +173,15 @@ class _PlayerState extends State<_PlayersPage> {
                     value: dropdownValue,
                     icon: const Icon(Icons.arrow_downward),
                     elevation: 16,
-                    style: const TextStyle(color: Colors.deepPurple),
-                    underline: Container(
-                      height: 2,
-                      color: Colors.deepPurpleAccent,
-                    ),
-                    onChanged: (String? value) {
+                    style: const TextStyle(
+                        fontSize: 16, fontStyle: FontStyle.italic),
+                    //underline: Container(),
+                    onChanged: (String? value) async {
+                      dropdownValue = value!;
+                      Navigator.pop(context);
+                      await _openNewPlayer();
                       // This is called when the user selects an item.
-                      setState(() {
-                        dropdownValue = value!;
-                      });
+                      setState(() {});
                     },
                     items: _dropdownItems
                         .map<DropdownMenuItem<String>>((String value) {
