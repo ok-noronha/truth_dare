@@ -21,6 +21,7 @@ class _PlayerState extends State<_PlayersPage> {
   late TextEditingController _playerController;
   //late TextEditingController _genc;
   String dropdownValue = 'None';
+  // ignore: prefer_final_fields
   List<String> _dropdownItems = <String>['None', 'Male', 'Female'];
 
   @override

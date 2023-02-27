@@ -22,8 +22,8 @@ class _Queststate extends State<_QuestsPage> {
   //late TextEditingController _genc;
   String dropdownValue = 'None';
   String typeValue = 'Truth';
-  List<String> _typeItems = <String>['Truth', 'Dare'];
-  List<String> _dropdownItems = <String>['None', 'Male', 'Female'];
+  final List<String> _typeItems = <String>['Truth', 'Dare'];
+  final List<String> _dropdownItems = <String>['None', 'Male', 'Female'];
 
   @override
   void initState() {
@@ -52,7 +52,7 @@ class _Queststate extends State<_QuestsPage> {
         foregroundColor: ThemeManager.appBarfg,
       ),
       body: Padding(
-        padding: EdgeInsets.all(50),
+        padding: const EdgeInsets.all(50),
         //height: 400,
         child: SizedBox(
           child: Column(children: [

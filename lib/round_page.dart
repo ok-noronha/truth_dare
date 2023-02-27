@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, dead_code
+// ignore_for_file: prefer_const_constructors, dead_code, unused_element
 
 import 'colors.dart';
 import 'images.dart';
@@ -70,7 +70,6 @@ class _RoundPageState extends State<_RoundPage> {
     });
   }
 
-  // ignore: unused_element
   void _deeddone(num scr) {
     _p.addScore(scr);
     if (false) {
