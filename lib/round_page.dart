@@ -5,6 +5,7 @@ import 'images.dart';
 
 import 'player_man.dart';
 import 'question_man.dart';
+import 'ui_helpers.dart';
 
 import 'players_page.dart';
 
@@ -17,9 +18,9 @@ dynamic getRoundPage(String n) => _RoundPage(
     );
 
 class _RoundPage extends StatefulWidget {
-  static Data data = getData();
-  _RoundPage({super.key, required this.title});
-  String title;
+  //static Data data = getData();
+  const _RoundPage({required this.title});
+  final String title;
 
   @override
   State<_RoundPage> createState() => _RoundPageState();
@@ -27,7 +28,7 @@ class _RoundPage extends StatefulWidget {
 
 class _RoundPageState extends State<_RoundPage> {
   Player _p = Player.getPlayerObj();
-  String _name = "";
+  //String _name = "";
   String? _quest = "";
   Color _questionColor = ThemeManager.gold;
   AssetImage _bgImg = AssetImage(ImageManager.ch11);
@@ -42,7 +43,7 @@ class _RoundPageState extends State<_RoundPage> {
 
   void _setplayer() {
     setState(() {
-      _name = _p.name;
+      //_name = _p.name;
       _choiceButtonVisibility = true;
       _judgeVisibility = false;
     });
@@ -50,12 +51,11 @@ class _RoundPageState extends State<_RoundPage> {
 
   void _setquest(int param) {
     setState(() {
-      _quest = 'hrt';
-      String idk = '${_p.name}, ${getRandomQuestion(
+      //_quest = 'hrt';
+      _quest = '${_p.name}, ${getRandomQuestion(
         param,
         _p,
         0,
-        _RoundPage.data,
       ).question}';
       if (param == 0) {
         _questionColor = ThemeManager.gold;
@@ -102,12 +102,9 @@ class _RoundPageState extends State<_RoundPage> {
             tooltip: 'Player Settings',
             onPressed: () {
               // ignore: todo
-              //TODO: change player button
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      // ignore: todo
-                      //TODO: Navigate to Round Page
                       builder: (context) => getPLayersPage("Players")));
             },
           ),
@@ -155,7 +152,7 @@ class _RoundPageState extends State<_RoundPage> {
                   ),
                 ],
                 //fontFamilyFallback: Typography._helsinkiFontFallbacks,
-                fontFamily: 'Argentina',
+                fontFamily: 'Black Cherry',
                 //color: Color(0xFF250038),
               ),
             ),
@@ -177,9 +174,11 @@ class _RoundPageState extends State<_RoundPage> {
                     child: Text(
                       _quest!,
                       maxLines: 3,
-                      style: const TextStyle(
-                        fontFamily: 'Creattion Demo',
-                        fontSize: 41,
+                      style: TextStyle(
+                        fontFamily: 'Black Cherry',
+                        fontSize: 31,
+                        fontWeight: FontWeight.w900,
+                        color: getQColors(_questionColor),
                       ),
                     ),
                   ),
@@ -244,12 +243,8 @@ class _RoundPageState extends State<_RoundPage> {
                       foregroundColor:
                           MaterialStateProperty.all<Color>(Colors.blue),
                     ),
-                    onLongPress: () {
-                      _deeddone(5);
-                      Navigator.pop(context, true);
-                    },
                     onPressed: () {
-                      _deeddone(2);
+                      _deeddone(-2);
                       Navigator.pop(context, true);
                     },
                     child: Text(
@@ -267,8 +262,12 @@ class _RoundPageState extends State<_RoundPage> {
                       foregroundColor:
                           MaterialStateProperty.all<Color>(Colors.blue),
                     ),
+                    onLongPress: () {
+                      _deeddone(5);
+                      Navigator.pop(context, true);
+                    },
                     onPressed: () {
-                      _deeddone(-2);
+                      _deeddone(2);
                       Navigator.pop(context, true);
                     },
                     child: Text(

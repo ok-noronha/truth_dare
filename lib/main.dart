@@ -7,17 +7,17 @@ import 'package:easy_dynamic_theme/easy_dynamic_theme.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  Data d = getData();
   runApp(EasyDynamicThemeWidget(child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
+  static Data d = getData();
   const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
+      //debugShowCheckedModeBanner: false,
       title: 'Truth or Dare',
       theme: ThemeData(
           fontFamily: 'Quicksand',

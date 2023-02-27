@@ -43,8 +43,8 @@ Color invertInvertColorsTheme(BuildContext context) {
   }
 } //keeps the same colors lol
 
-Color invertColorsMild(BuildContext context) {
-  if (isThemeCurrentlyDark(context)) {
+Color getQColors(Color c) {
+  if (c == ThemeManager.blood) {
     return MyColors.light;
   } else {
     return MyColors.dark;

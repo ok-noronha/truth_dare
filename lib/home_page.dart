@@ -6,10 +6,10 @@ import 'colors.dart';
 import 'images.dart';
 
 import 'player_man.dart';
-import 'question_man.dart';
 
 import 'players_page.dart';
 import 'round_page.dart';
+import 'quest_page.dart';
 
 import 'package:flutter/material.dart';
 //import 'package:getwidget/getwidget.dart';
@@ -41,7 +41,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
     c++;
-    Data d = getData();
+    //Data d = getData();
     _timer = Timer.periodic(const Duration(seconds: 10), (timer) {
       if (_currentPage == _backgroundImages.length - 1) {
         _currentPage = 0;
@@ -69,7 +69,7 @@ class _MyHomePageState extends State<MyHomePage> {
       backgroundColor: ThemeManager.backgroundColor,
       appBar: AppBar(
         title: Text(
-          '$widget.title - $c',
+          widget.title,
           style: const TextStyle(
             fontSize: 30,
             fontFamily: 'Black Cherry',
@@ -90,8 +90,6 @@ class _MyHomePageState extends State<MyHomePage> {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      // ignore: todo
-                      //TODO: Navigate to Round Page
                       builder: (context) => getPLayersPage("Players")));
             },
           ),
@@ -106,7 +104,7 @@ class _MyHomePageState extends State<MyHomePage> {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => getPLayersPage("Players")));
+                      builder: (context) => getQuestsPage("Players")));
             },
           ),
         ],

@@ -10,8 +10,8 @@ class ThemeManager {
 }
 
 class MyColors {
-  static const primary = Color(0xff212121);
-  static const onprimary = Color(0xFFB3D2D4);
+  static const primary = Color(0xFFC92DAF);
+  static const onprimary = Color(0xFF000000);
   static const accent = Color(0xff00e5ff);
   static const onaccent = Color(0xFF063035);
   static const light = Color(0xffeceff1);

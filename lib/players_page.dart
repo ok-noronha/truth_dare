@@ -19,7 +19,9 @@ class _PlayersPage extends StatefulWidget {
 
 class _PlayerState extends State<_PlayersPage> {
   late TextEditingController _playerController;
-  late TextEditingController _genc;
+  //late TextEditingController _genc;
+  String dropdownValue = 'None';
+  List<String> _dropdownItems = <String>['None', 'Male', 'Female'];
 
   @override
   void initState() {
@@ -28,13 +30,13 @@ class _PlayerState extends State<_PlayersPage> {
       Player.addPlayer(Player.getPlayers().length + 1, 'Player 1', 0);
     }
     _playerController = TextEditingController();
-    _genc = TextEditingController();
+    //_genc = TextEditingController();
   }
 
   @override
   void dispose() {
     _playerController.dispose();
-    _genc.dispose();
+    //_genc.dispose();
     super.dispose();
   }
 
@@ -60,43 +62,59 @@ class _PlayerState extends State<_PlayersPage> {
           ),
         ),
         backgroundColor: ThemeManager.appBarbg,
-        //foregroundColor: ThemeManager.appBarfg,
+        foregroundColor: ThemeManager.appBarfg,
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: Player.getPlayers().map((player) {
-            return Card(
-              child: ListTile(
-                leading: ElevatedButton(
-                  child: Text(_genGender(player)),
-                  onPressed: () {
-                    if (player.gender == 1) {
-                      player.gender = 0;
-                    } else if (player.gender == 0) {
-                      player.gender = -1;
-                    } else {
-                      player.gender = 1;
-                    }
-                    setState(() {});
-                  },
-                ),
-                title: Text('${player.id}. ${player.name}'),
-                trailing: ElevatedButton(
-                  child: const Icon(Icons.delete),
-                  onPressed: () {
-                    //delete action for this button
-                    Player.getPlayers().removeWhere((element) {
-                      return element.id == player.id;
-                    }); //go through the loop and match content to delete from list
-                    setState(() {
-                      //refresh UI after deleting element from list
-                    });
-                  },
-                ),
+      body: Column(
+        children: [
+          SizedBox(
+            //height: 400,
+            child: SingleChildScrollView(
+              child: Column(
+                children: Player.getPlayers().map((player) {
+                  return Card(
+                    child: ListTile(
+                      leading: ElevatedButton(
+                        child: Text(_genGender(player)),
+                        onPressed: () {
+                          if (player.gender == 1) {
+                            player.gender = 0;
+                          } else if (player.gender == 0) {
+                            player.gender = -1;
+                          } else {
+                            player.gender = 1;
+                          }
+                          setState(() {});
+                        },
+                      ),
+                      title: Text(
+                          '${player.id}. ${player.name}   -    ${player.score}'),
+                      trailing: ElevatedButton(
+                        child: const Icon(Icons.delete),
+                        onPressed: () {
+                          //delete action for this button
+                          Player.getPlayers().removeWhere((element) {
+                            return element.id == player.id;
+                          }); //go through the loop and match content to delete from list
+                          setState(() {
+                            //refresh UI after deleting element from list
+                          });
+                        },
+                      ),
+                    ),
+                  );
+                }).toList(),
               ),
-            );
-          }).toList(),
-        ),
+            ),
+          ),
+          const Spacer(flex: 4),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.pop(context, true);
+            },
+            child: const Text('Done'),
+          ),
+          const Spacer(flex: 1),
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
@@ -107,6 +125,16 @@ class _PlayerState extends State<_PlayersPage> {
         child: const Icon(Icons.add),
       ),
     );
+  }
+
+  int _getNumfrmGen(String g) {
+    if (g.startsWith('M')) {
+      return 1;
+    } else if (g.startsWith('F')) {
+      return -1;
+    } else {
+      return 0;
+    }
   }
 
   Future _openNewPlayer() => showDialog(
@@ -132,13 +160,28 @@ class _PlayerState extends State<_PlayersPage> {
                 ),
                 Align(
                   alignment: Alignment.bottomLeft,
-                  child: TextField(
-                    style: const TextStyle(
-                        fontSize: 16, fontStyle: FontStyle.italic),
-                    //cursorHeight: 3,
-                    controller: _genc,
-                    autofocus: true,
-                    decoration: const InputDecoration(hintText: "Gender"),
+                  child: DropdownButton<String>(
+                    value: dropdownValue,
+                    icon: const Icon(Icons.arrow_downward),
+                    elevation: 16,
+                    style: const TextStyle(color: Colors.deepPurple),
+                    underline: Container(
+                      height: 2,
+                      color: Colors.deepPurpleAccent,
+                    ),
+                    onChanged: (String? value) {
+                      // This is called when the user selects an item.
+                      setState(() {
+                        dropdownValue = value!;
+                      });
+                    },
+                    items: _dropdownItems
+                        .map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
                   ),
                 ),
               ],
@@ -153,9 +196,9 @@ class _PlayerState extends State<_PlayersPage> {
               child: const Text("Add"),
               onPressed: () {
                 Player.addPlayer(Player.getPlayers().length + 1,
-                    _playerController.text, int.parse(_genc.text));
+                    _playerController.text, _getNumfrmGen(dropdownValue));
                 _playerController.clear();
-                _genc.clear();
+                //_genc.clear();
                 Navigator.pop(context);
               },
             ),
